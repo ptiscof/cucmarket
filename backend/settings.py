@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -36,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'books_market',
 ]
 
@@ -52,6 +52,20 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+REST_FRAMEWORK = {
+    # 指定用于支持coreapi的Schema
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 此身份验证方案使用HTTP基本身份验证，根据用户的用户名和密码进行签名。仅用于测试。
+        'rest_framework.authentication.BasicAuthentication',
+        # 此身份验证方案使用Django的默认会话后端进行身份验证。# 如果前后端都是你来写的，那么可以用这个会话认证
+        'rest_framework.authentication.SessionAuthentication',
+        # 此身份验证方案使用基于令牌的简单HTTP身份验证方案。令牌认证适用于客户端 - 服务器设置。 #如果是前后端分离，则要用这个令牌认证
+        # 'rest_framework.authentication.TokenAuthentication'
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    )
+}
 
 TEMPLATES = [
     {
@@ -71,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -80,7 +93,7 @@ DATABASES = {
         # 数据库引擎配置
         'ENGINE': 'django.db.backends.mysql',
         # 数据库的名字
-        'NAME': 'book_market_db',
+        'NAME': 'books_market_db',
         # 数据库服务器的IP地址（本机可以写localhost或127.0.0.1）
         'HOST': 'rm-cn-x0r36r2td000cezo.rwlb.rds.aliyuncs.com',
         # 启动MySQL服务的端口号
@@ -113,9 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 REST_FRAMEWORK = {
-    'PAGE_SIZE' : 10,
+    'PAGE_SIZE': 10,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination'
 }
 
@@ -131,7 +143,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

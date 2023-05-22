@@ -15,15 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from books_market.views import *
-'''
+import os
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('api/users', UserViewSet)
-'''
+router.register('api/books', BookViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-# urlpatterns += router.urls
+urlpatterns += router.urls
