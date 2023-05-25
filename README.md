@@ -1,2 +1,1 @@
-# Books_Market
-django + vue 书籍二手市场
+django 二手市场
